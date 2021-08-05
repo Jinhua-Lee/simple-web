@@ -44,6 +44,17 @@
             <scope>test</scope>
         </dependency>
 
+        <!--mybatis及JDK8时间类型处理-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
     </dependencies>
 
