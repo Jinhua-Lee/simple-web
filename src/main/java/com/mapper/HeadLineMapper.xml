@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.HeadLineMapper">
+
+    <resultMap id="HeadLineMap" type="com.entity.HeadLine">
+        <id column="line_id" property="lineId"/>
+        <result column="line_name" property="lineName"/>
+        <result column="line_link" property="lineLink"/>
+        <result column="line_img" property="lineImg"/>
+        <result column="priority" property="priority"/>
+        <result column="enable_status" property="enableStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_edit_time" property="lastEditTime"/>
+    </resultMap>
+
+    <!--插入头条表-->
+    <insert id="addHeadLines" useGeneratedKeys="true" parameterType="com.entity.HeadLine">
+        insert into tb_head_line(line_name, line_link, line_img, priority, enable_status, create_time, last_edit_time)
+        values
+        <foreach collection="headLines" item="headLine" separator=", ">
+            (
+            #{lineName}, #{lineLink}, #{headLine.lineImg}, #{priority},
+            #{enableStatus}, #{crateTime}, #{lastEditTime}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除头条表-->
+    <delete id="deleteHeadLines" parameterType="integer">
+        delete from tb_head_line
+        where line_id in
+        <foreach collection="headLineIds" separator=", " item="headLineId" open="(" close=")">
+            #{headLineId}
+        </foreach>
+    </delete>
+
+
+    <!--更新头条列表-->
+    <update id="updateHeadLines" parameterType="com.entity.HeadLine">
+        <foreach collection="headLines" item="headLine" separator=";">
+            <if test="lineId != null">
+                update tb_head_line
+                set
+                line_name = #{lineName}
+                line_link = #{lineLink}
+                line_img = #{lineImg}
+                priority = #{priority}
+                enable_status = #{enableStatus}
+                create_time = #{createTime}
+                last_edit_time = #{lastEditTime}
+                where line_id = #{lineId}
+            </if>
+        </foreach>
+    </update>
+
+    <!--查询头条列表-->
+    <select id="query" resultMap="HeadLineMap">
+        select *
+        from tb_head_line
+    </select>
+
+
+</mapper>

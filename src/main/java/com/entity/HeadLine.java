@@ -1,6 +1,11 @@
 package com.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +17,11 @@ import java.time.LocalDateTime;
  * @date 2021/8/5 22:34
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HeadLine {
 
     /**
@@ -54,4 +64,14 @@ public class HeadLine {
      * 上次创建时间
      */
     private LocalDateTime lastEditTime;
+
+
+    @Override
+    @SneakyThrows
+    public String toString() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.registerModule(new JavaTimeModule());
+        return mapper.writeValueAsString(this);
+    }
 }
