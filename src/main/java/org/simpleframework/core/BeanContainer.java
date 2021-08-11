@@ -35,6 +35,9 @@ public class BeanContainer {
     }
 
     private enum BeanContainerHolder {
+        /**
+         * 单例持有类
+         */
         HOLDER;
 
         private final BeanContainer instance;
