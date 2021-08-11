@@ -1,5 +1,6 @@
 package org.simpleframework.core;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.simpleframework.core.annotation.Controller;
 import org.simpleframework.core.util.ClassUtil;
@@ -25,6 +26,9 @@ public class BeanContainer {
     private final List<Class<? extends Annotation>> beanAnnotations = List.of(
             Controller.class
     );
+
+    @Getter
+    private boolean loaded;
 
     public static BeanContainer getInstance() {
         return BeanContainerHolder.HOLDER.instance;
@@ -52,7 +56,11 @@ public class BeanContainer {
      *
      * @param pkgName 包名
      */
-    public void loadBeans(String pkgName) {
+    public synchronized void loadBeans(String pkgName) {
+        if (isLoaded()) {
+            log.warn("Bean Container has been loaded.");
+            return;
+        }
         Set<Class<?>> classSet = ClassUtil.extractPkgClasses(pkgName);
         if (classSet.isEmpty()) {
             log.warn("extract nothing from package: {}", pkgName);
@@ -65,5 +73,6 @@ public class BeanContainer {
                 }
             }
         }
+        loaded = true;
     }
 }

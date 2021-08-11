@@ -17,5 +17,6 @@ public class BeanContainerTest {
     public void loadBeanTest() {
         beanContainer.loadBeans("com.controller");
         Assertions.assertEquals(1, beanContainer.size());
+        Assertions.assertTrue(beanContainer.isLoaded());
     }
 }
