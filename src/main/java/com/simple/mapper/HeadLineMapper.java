@@ -1,7 +1,6 @@
-package com.mapper;
+package com.simple.mapper;
 
-import com.entity.HeadLine;
-import org.apache.ibatis.annotations.Insert;
+import com.simple.entity.HeadLine;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

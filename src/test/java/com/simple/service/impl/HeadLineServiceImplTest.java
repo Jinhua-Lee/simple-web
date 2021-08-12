@@ -1,6 +1,6 @@
-package com.service.impl;
+package com.simple.service.impl;
 
-import com.entity.HeadLine;
+import com.simple.entity.HeadLine;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

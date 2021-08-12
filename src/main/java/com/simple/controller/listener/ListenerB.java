@@ -1,4 +1,4 @@
-package com.controller.listener;
+package com.simple.controller.listener;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebListener;

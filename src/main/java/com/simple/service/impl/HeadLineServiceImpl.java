@@ -1,12 +1,13 @@
-package com.service.impl;
+package com.simple.service.impl;
 
-import com.entity.HeadLine;
+import com.simple.entity.HeadLine;
+import com.simple.mapper.HeadLineMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mapper.HeadLineMapper;
-import com.service.HeadLineService;
-import com.util.MyBatisSessionUtil;
+import com.simple.service.HeadLineService;
+import com.simple.util.MyBatisSessionUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.simpleframework.core.annotation.Service;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @version 1.0
  * @date 2021/8/7 21:44
  */
+@Service
 public class HeadLineServiceImpl implements HeadLineService {
 
     @Override

@@ -1,6 +1,6 @@
-package com.controller;
+package com.simple.controller;
 
-import com.service.HeadLineService;
+import com.simple.service.HeadLineService;
 import org.simpleframework.core.annotation.Controller;
 
 /**

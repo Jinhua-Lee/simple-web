@@ -1,7 +1,6 @@
-package com.service;
+package com.simple.service;
 
-import com.entity.HeadLine;
-import com.entity.Result;
+import com.simple.entity.HeadLine;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;

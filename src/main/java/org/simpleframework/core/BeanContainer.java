@@ -2,13 +2,14 @@ package org.simpleframework.core;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.simpleframework.core.annotation.Component;
 import org.simpleframework.core.annotation.Controller;
+import org.simpleframework.core.annotation.Repository;
+import org.simpleframework.core.annotation.Service;
 import org.simpleframework.core.util.ClassUtil;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -24,7 +25,7 @@ public class BeanContainer {
     private final Map<Class<?>, Object> beanMap = new ConcurrentHashMap<>();
 
     private final List<Class<? extends Annotation>> beanAnnotations = List.of(
-            Controller.class
+            Controller.class, Service.class, Repository.class, Component.class
     );
 
     @Getter
@@ -74,5 +75,59 @@ public class BeanContainer {
             }
         }
         loaded = true;
+    }
+
+    public void addBean(Class<?> clazz, Object bean) {
+        this.beanMap.put(clazz, bean);
+    }
+
+    public Object removeBean(Class<?> clazz) {
+        return beanMap.remove(clazz);
+    }
+
+    public Object getBean(Class<?> clazz) {
+        return beanMap.get(clazz);
+    }
+
+    public Set<Class<?>> getClasses() {
+        return beanMap.keySet();
+    }
+
+    public Set<Object> getBeans() {
+        return new HashSet<>(beanMap.values());
+    }
+
+    public Set<Class<?>> getClassesByAnnotation(Class<? extends Annotation> annotation) {
+        Set<Class<?>> keySet = getClasses();
+        if (keySet == null || keySet.isEmpty()) {
+            log.warn("nothing in bean map");
+            return Collections.emptySet();
+        }
+        Set<Class<?>> classSet = new HashSet<>();
+        // 通过注解筛选被标记的class对象
+        keySet.forEach(clazz -> {
+            if (clazz.isAnnotationPresent(annotation)) {
+                classSet.add(clazz);
+            }
+        });
+        return classSet.isEmpty() ? Collections.emptySet() : classSet;
+    }
+
+    public Set<Class<?>> getClassesBySuper(Class<?> parent) {
+        Set<Class<?>> keySet = getClasses();
+        if (keySet == null || keySet.isEmpty()) {
+            log.warn("nothing in bean map");
+            return Collections.emptySet();
+        }
+        Set<Class<?>> classSet = new HashSet<>();
+        // 通过注解筛选被标记的class对象
+        keySet.forEach(clazz -> {
+            // 类对象相等，则排除
+            if (!Objects.equals(clazz, parent)
+                    && clazz.isAssignableFrom(parent)) {
+                classSet.add(clazz);
+            }
+        });
+        return classSet.isEmpty() ? Collections.emptySet() : classSet;
     }
 }
