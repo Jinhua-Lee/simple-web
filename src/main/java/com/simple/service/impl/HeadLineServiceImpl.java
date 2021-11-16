@@ -73,7 +73,7 @@ public class HeadLineServiceImpl implements HeadLineService {
 
     private SqlSession manualSession() {
         MyBatisSessionUtil sessionUtil = MyBatisSessionUtil.getInstance();
-        return sessionUtil.getSession(true);
+        return sessionUtil.getSession(false);
     }
 
     @Override

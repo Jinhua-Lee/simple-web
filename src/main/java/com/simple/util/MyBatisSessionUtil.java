@@ -1,5 +1,7 @@
 package com.simple.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -15,6 +17,7 @@ import java.util.Objects;
  * @version 1.1   增加单例控制
  * @date 2020/12/26 1:42
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MyBatisSessionUtil {
 
     /**
@@ -26,9 +29,6 @@ public class MyBatisSessionUtil {
      * 单例对象
      */
     private static volatile MyBatisSessionUtil singleSession;
-
-    private MyBatisSessionUtil() {
-    }
 
     static {
         final String resource = "SqlMapConfig.xml";

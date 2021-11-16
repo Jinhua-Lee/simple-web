@@ -1,6 +1,8 @@
 package org.simpleframework.core;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.simpleframework.core.annotation.Component;
 import org.simpleframework.core.annotation.Controller;
@@ -20,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2021/8/9 23:19
  */
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BeanContainer {
 
     private final Map<Class<?>, Object> beanMap = new ConcurrentHashMap<>();
@@ -36,7 +39,7 @@ public class BeanContainer {
     }
 
     public int size() {
-        return beanMap.size();
+        return this.beanMap.size();
     }
 
     private enum BeanContainerHolder {
@@ -58,10 +61,7 @@ public class BeanContainer {
      * @param pkgName 包名
      */
     public synchronized void loadBeans(String pkgName) {
-        if (isLoaded()) {
-            log.warn("Bean Container has been loaded.");
-            return;
-        }
+        if (checkEmpty(isLoaded(), "Bean Container has been loaded.")) return;
         Set<Class<?>> classSet = ClassUtil.extractPkgClasses(pkgName);
         if (classSet.isEmpty()) {
             log.warn("extract nothing from package: {}", pkgName);
@@ -70,7 +70,7 @@ public class BeanContainer {
         for (Class<?> clazz : classSet) {
             for (Class<? extends Annotation> bAnnotation : beanAnnotations) {
                 if (clazz.isAnnotationPresent(bAnnotation)) {
-                    beanMap.put(clazz, ClassUtil.newInstance(clazz));
+                    this.beanMap.put(clazz, ClassUtil.newInstance(clazz));
                 }
             }
         }
@@ -82,15 +82,15 @@ public class BeanContainer {
     }
 
     public Object removeBean(Class<?> clazz) {
-        return beanMap.remove(clazz);
+        return this.beanMap.remove(clazz);
     }
 
     public Object getBean(Class<?> clazz) {
-        return beanMap.get(clazz);
+        return this.beanMap.get(clazz);
     }
 
     public Set<Class<?>> getClasses() {
-        return beanMap.keySet();
+        return this.beanMap.keySet();
     }
 
     public Set<Object> getBeans() {
@@ -99,10 +99,8 @@ public class BeanContainer {
 
     public Set<Class<?>> getClassesByAnnotation(Class<? extends Annotation> annotation) {
         Set<Class<?>> keySet = getClasses();
-        if (keySet == null || keySet.isEmpty()) {
-            log.warn("nothing in bean map");
+        if (checkEmpty(keySet == null || keySet.isEmpty(), "nothing in bean map"))
             return Collections.emptySet();
-        }
         Set<Class<?>> classSet = new HashSet<>();
         // 通过注解筛选被标记的class对象
         keySet.forEach(clazz -> {
@@ -113,14 +111,19 @@ public class BeanContainer {
         return classSet.isEmpty() ? Collections.emptySet() : classSet;
     }
 
+    /**
+     * 根据父类获取子类列表
+     *
+     * @param parent 父类型
+     * @return 子类型列表
+     */
     public Set<Class<?>> getClassesBySuper(Class<?> parent) {
         Set<Class<?>> keySet = getClasses();
-        if (keySet == null || keySet.isEmpty()) {
-            log.warn("nothing in bean map");
+        if (checkEmpty(keySet == null || keySet.isEmpty(), "nothing in bean map"))
             return Collections.emptySet();
-        }
         Set<Class<?>> classSet = new HashSet<>();
         // 通过注解筛选被标记的class对象
+        assert keySet != null;
         keySet.forEach(clazz -> {
             // 类对象相等，则排除
             if (!Objects.equals(clazz, parent)
@@ -129,5 +132,13 @@ public class BeanContainer {
             }
         });
         return classSet.isEmpty() ? Collections.emptySet() : classSet;
+    }
+
+    private boolean checkEmpty(boolean checkCondition, String emptyMsg) {
+        if (checkCondition) {
+            log.warn(emptyMsg);
+            return true;
+        }
+        return false;
     }
 }

@@ -22,7 +22,7 @@ public class BeanContainerTest {
     @Test
     public void loadBeanTest() {
         Assertions.assertFalse(beanContainer.isLoaded());
-        beanContainer.loadBeans("com.simple.controller");
+        beanContainer.loadBeans("com.simple");
         Assertions.assertEquals(1, beanContainer.size());
         Assertions.assertTrue(beanContainer.isLoaded());
     }

@@ -55,7 +55,7 @@
         </environment>
     </environments>
     <mappers>
-        <package name="com.mapper"/>
+        <package name="com.simple.mapper"/>
 <!--        <mapper resource="mapper/TxDemoMapper.xml"/>-->
 <!--        <mapper resource="mapper/PropagationMapper.xml"/>-->
     </mappers>

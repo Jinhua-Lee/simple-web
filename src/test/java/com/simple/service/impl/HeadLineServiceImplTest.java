@@ -8,13 +8,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.pagehelper.PageInfo;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+import org.simpleframework.core.annotation.Service;
 
 import java.util.List;
 
 /**
  * 头条列表测试
  */
-
+@Service
 public class HeadLineServiceImplTest extends HeadLineServiceImpl {
 
     @Test
