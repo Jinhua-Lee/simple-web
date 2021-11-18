@@ -1,7 +1,8 @@
 package com.simple.controller;
 
 import com.simple.service.HeadLineService;
-import org.simpleframework.core.annotation.Controller;
+import org.simpleframework.core.inject.annotation.Controller;
+import org.simpleframework.core.inject.annotation.Autowired;
 
 /**
  * 头条信息控制器
@@ -13,6 +14,7 @@ import org.simpleframework.core.annotation.Controller;
 @Controller
 public class HeadLineController {
 
+    @Autowired
     private HeadLineService headLineService;
 
 

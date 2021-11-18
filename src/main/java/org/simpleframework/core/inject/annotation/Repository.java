@@ -1,4 +1,4 @@
-package org.simpleframework.core.annotation;
+package org.simpleframework.core.inject.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,6 +13,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 // 注解信息保存到运行时生效
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Service {
+public @interface Repository {
 
 }

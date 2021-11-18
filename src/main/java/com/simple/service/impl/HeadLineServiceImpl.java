@@ -7,7 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.simple.service.HeadLineService;
 import com.simple.util.MyBatisSessionUtil;
 import org.apache.ibatis.session.SqlSession;
-import org.simpleframework.core.annotation.Service;
+import org.simpleframework.core.inject.annotation.Service;
 
 import java.util.List;
 

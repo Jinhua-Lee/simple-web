@@ -5,7 +5,7 @@ import com.simple.controller.servlet.DispatcherServlet;
 import com.simple.service.HeadLineService;
 import com.simple.service.impl.HeadLineServiceImpl;
 import org.junit.jupiter.api.*;
-import org.simpleframework.core.annotation.Controller;
+import org.simpleframework.core.inject.annotation.Controller;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BeanContainerTest {

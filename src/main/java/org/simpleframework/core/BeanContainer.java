@@ -4,10 +4,10 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.simpleframework.core.annotation.Component;
-import org.simpleframework.core.annotation.Controller;
-import org.simpleframework.core.annotation.Repository;
-import org.simpleframework.core.annotation.Service;
+import org.simpleframework.core.inject.annotation.Component;
+import org.simpleframework.core.inject.annotation.Controller;
+import org.simpleframework.core.inject.annotation.Repository;
+import org.simpleframework.core.inject.annotation.Service;
 import org.simpleframework.core.util.ClassUtil;
 
 import java.lang.annotation.Annotation;
